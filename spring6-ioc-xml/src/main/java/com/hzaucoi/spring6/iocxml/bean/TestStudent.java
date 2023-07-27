@@ -11,4 +11,10 @@ public class TestStudent {
         Student studentOne = context.getBean("studentOne", Student.class);
         System.out.println(studentOne);
     }
+    @Test
+    public void testDiByConstructor(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-di.xml");
+        Student studentTwo = context.getBean("studentTwo", Student.class);
+        System.out.println(studentTwo);
+    }
 }
