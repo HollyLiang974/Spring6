@@ -1,5 +1,9 @@
 package com.hzaucoi.spring6.iocxml.bean;
+
+import java.util.Arrays;
+
 //在学生的属性中添加班级信息
+//为数组类型属性赋值,添加数组类型属性
 public class Student {
     private Integer id;
 
@@ -7,16 +11,9 @@ public class Student {
 
     private Integer age;
 
-    public Clazz getClazz() {
-        return clazz;
-    }
-
-    public void setClazz(Clazz clazz) {
-        this.clazz = clazz;
-    }
-
     private String sex;
     private Clazz clazz;
+    private String[] hobbies;
 
     public Student() {
     }
@@ -26,6 +23,13 @@ public class Student {
         this.name = name;
         this.age = age;
         this.sex = sex;
+    }
+    public Clazz getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Clazz clazz) {
+        this.clazz = clazz;
     }
 
     public void setId(Integer id) {
@@ -44,6 +48,14 @@ public class Student {
         this.sex = sex;
     }
 
+    public String[] getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(String[] hobbies) {
+        this.hobbies = hobbies;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -52,6 +64,7 @@ public class Student {
                 ", age=" + age +
                 ", sex='" + sex + '\'' +
                 ", clazz=" + clazz +
+                ", hobbies=" + Arrays.toString(hobbies) +
                 '}';
     }
 }
