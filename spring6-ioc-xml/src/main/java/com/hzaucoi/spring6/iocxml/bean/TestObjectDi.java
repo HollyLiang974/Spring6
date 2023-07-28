@@ -22,4 +22,13 @@ public class TestObjectDi {
         System.out.println(student.toString());
 
     }
+
+    @Test
+    //级联属性赋值
+    public void testObjectDi3() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("object-di.xml");
+        Student student = (Student) context.getBean("studentSix", Student.class);
+        System.out.println(student.toString());
+
+    }
 }
