@@ -1,5 +1,5 @@
 package com.hzaucoi.spring6.iocxml.bean;
-
+//在学生的属性中添加班级信息
 public class Student {
     private Integer id;
 
@@ -7,7 +7,16 @@ public class Student {
 
     private Integer age;
 
+    public Clazz getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Clazz clazz) {
+        this.clazz = clazz;
+    }
+
     private String sex;
+    private Clazz clazz;
 
     public Student() {
     }
@@ -42,6 +51,7 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", sex='" + sex + '\'' +
+                ", clazz=" + clazz +
                 '}';
     }
 }
