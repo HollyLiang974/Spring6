@@ -1,9 +1,11 @@
 package com.hzaucoi.spring6.iocxml.bean;
 
 import java.util.Arrays;
+import java.util.Map;
 
 //在学生的属性中添加班级信息
 //为数组类型属性赋值,添加数组类型属性
+//添加Map类型属性
 public class Student {
     private Integer id;
 
@@ -14,6 +16,7 @@ public class Student {
     private String sex;
     private Clazz clazz;
     private String[] hobbies;
+    private Map<String, Teacher> teacherMap;
 
     public Student() {
     }
@@ -56,6 +59,14 @@ public class Student {
         this.hobbies = hobbies;
     }
 
+    public Map<String, Teacher> getTeacherMap() {
+        return teacherMap;
+    }
+
+    public void setTeacherMap(Map<String, Teacher> teacherMap) {
+        this.teacherMap = teacherMap;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -65,6 +76,7 @@ public class Student {
                 ", sex='" + sex + '\'' +
                 ", clazz=" + clazz +
                 ", hobbies=" + Arrays.toString(hobbies) +
+                ", teacherMap=" + teacherMap +
                 '}';
     }
 }
