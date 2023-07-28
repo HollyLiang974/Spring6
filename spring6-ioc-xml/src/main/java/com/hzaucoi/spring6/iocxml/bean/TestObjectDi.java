@@ -13,4 +13,13 @@ public class TestObjectDi {
         System.out.println(student.toString());
 
     }
+
+    @Test
+    //测试引用内部bean
+    public void testObjectDi2() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("object-di.xml");
+        Student student = (Student) context.getBean("studentFive", Student.class);
+        System.out.println(student.toString());
+
+    }
 }
