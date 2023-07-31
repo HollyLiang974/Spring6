@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService{
 //    @Autowired
     private UserDao userDao;
+//    @Autowired
+//    public void setUserDao(UserDao userDao) {
+//        this.userDao = userDao;
+//    }
+
     @Autowired
-    public void setUserDao(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
