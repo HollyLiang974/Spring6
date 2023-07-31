@@ -1,0 +1,90 @@
+package com.hazucoi.spring6.core;
+
+import com.hazucoi.spring6.core.annotation.Bean;
+
+import java.io.File;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Enumeration;
+import java.util.HashMap;
+
+public class AnnotationApplicationContext implements ApplicationContext {
+
+    private static String rootPath;
+    //存储bean的容器
+    private final HashMap<Class, Object> beanFactory = new HashMap<>();
+
+    /**
+     * 根据包扫描加载bean
+     *
+     * @param basePackage
+     */
+    public AnnotationApplicationContext(String basePackage) {
+        try {
+            String packageDirName = basePackage.replaceAll("\\.", "\\\\");
+            Enumeration<URL> dirs = Thread.currentThread().getContextClassLoader().getResources(packageDirName);
+            while (dirs.hasMoreElements()) {
+                URL url = dirs.nextElement();
+                String filePath = URLDecoder.decode(url.getFile(), StandardCharsets.UTF_8);
+                rootPath = filePath.substring(0, filePath.length() - packageDirName.length());
+                loadBean(new File(filePath));
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Object getBean(Class clazz) {
+        return beanFactory.get(clazz);
+    }
+
+    private void loadBean(File fileParent) {
+        if (fileParent.isDirectory()) {
+            File[] childrenFiles = fileParent.listFiles();
+            if (childrenFiles == null || childrenFiles.length == 0) {
+                return;
+            }
+            for (File child : childrenFiles) {
+                if (child.isDirectory()) {
+                    //如果是个文件夹就继续调用该方法,使用了递归
+                    loadBean(child);
+                } else {
+                    //通过文件路径转变成全类名,第一步把绝对路径部分去掉
+                    String pathWithClass = child.getAbsolutePath().substring(rootPath.length() - 1);
+                    //选中class文件
+                    if (pathWithClass.contains(".class")) {
+                        //    com.xinzhi.dao.UserDao
+                        //去掉.class后缀，并且把 \ 替换成 .
+                        String fullName = pathWithClass.replaceAll("\\\\", ".").replace(".class", "");
+                        try {
+                            Class<?> aClass = Class.forName(fullName);
+                            //把非接口的类实例化放在map中
+                            if (!aClass.isInterface()) {
+                                Bean annotation = aClass.getAnnotation(Bean.class);
+                                if (annotation != null) {
+                                    Object instance = aClass.newInstance();
+                                    //判断一下有没有接口
+                                    if (aClass.getInterfaces().length > 0) {
+                                        //如果有接口把接口的class当成key，实例对象当成value
+                                        System.out.println("正在加载【" + aClass.getInterfaces()[0] + "】,实例对象是：" + instance.getClass().getName());
+                                        beanFactory.put(aClass.getInterfaces()[0], instance);
+                                    } else {
+                                        //如果有接口把自己的class当成key，实例对象当成value
+                                        System.out.println("正在加载【" + aClass.getName() + "】,实例对象是：" + instance.getClass().getName());
+                                        beanFactory.put(aClass, instance);
+                                    }
+                                }
+                            }
+                        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
