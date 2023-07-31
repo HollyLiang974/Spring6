@@ -32,4 +32,13 @@ public class TestUser {
         controller.out();
         System.out.println("执行结束");
     }
+
+    @Test
+    //形参注入，在构造方法形参上上添加@Autowire注解
+    public void testUser3(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
+        UserController controller = context.getBean("userController",UserController.class);
+        controller.out();
+        System.out.println("执行结束");
+    }
 }
