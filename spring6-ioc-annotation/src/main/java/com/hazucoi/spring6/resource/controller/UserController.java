@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 
 @Controller(value="myUserController")
 public class UserController {
-    @Resource(name="myUserService")
-    private UserService userService;
+    @Resource
+    private UserService myUserService;
     public void out(){
-        userService.out();
+        myUserService.out();
         System.out.println("Controller层执行结束");
     }
 }

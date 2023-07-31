@@ -11,18 +11,10 @@ public class TestUser {
     // 在每层的属性上加@AutoWire注解，无需set方法
     public void testUser(){
         ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
-        UserController controller = context.getBean("userController", UserController.class);
-        controller.out();
-        System.out.println("执行结束");
-
-    }
-    @Test
-    //set注入，在set方法上添加@Autowire注解
-    public void testUser1(){
-        ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
         UserController controller = context.getBean("myUserController", UserController.class);
         controller.out();
         System.out.println("执行结束");
+
     }
 
 }
