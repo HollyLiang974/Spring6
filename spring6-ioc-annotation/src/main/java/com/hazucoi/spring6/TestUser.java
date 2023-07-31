@@ -41,4 +41,12 @@ public class TestUser {
         controller.out();
         System.out.println("执行结束");
     }
+    @Test
+    //只有一个构造函数，无注解
+    public void testUser4(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
+        UserController controller = context.getBean("userController",UserController.class);
+        controller.out();
+        System.out.println("执行结束");
+    }
 }
