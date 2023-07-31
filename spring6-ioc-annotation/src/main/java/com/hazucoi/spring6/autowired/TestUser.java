@@ -1,6 +1,6 @@
-package com.hazucoi.spring6;
+package com.hazucoi.spring6.autowired;
 
-import com.hazucoi.spring6.controller.UserController;
+import com.hazucoi.spring6.autowired.controller.UserController;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

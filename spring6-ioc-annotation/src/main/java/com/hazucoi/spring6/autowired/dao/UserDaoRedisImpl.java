@@ -1,4 +1,4 @@
-package com.hazucoi.spring6.dao;
+package com.hazucoi.spring6.autowired.dao;
 
 import org.springframework.stereotype.Repository;
 

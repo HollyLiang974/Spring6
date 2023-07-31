@@ -1,9 +1,9 @@
-package com.hazucoi.spring6.dao;
+package com.hazucoi.spring6.resource.dao;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class UserDaoImpl implements UserDao{
+@Repository(value = "myUserDao")
+public class UserDaoImpl implements UserDao {
     @Override
     public void print() {
         System.out.println("Dao层执行结束");

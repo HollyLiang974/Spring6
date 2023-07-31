@@ -1,8 +1,6 @@
-package com.hazucoi.spring6.controller;
+package com.hazucoi.spring6.autowired.controller;
 
-import com.hazucoi.spring6.dao.UserDaoImpl;
-import com.hazucoi.spring6.service.UserService;
-import com.hazucoi.spring6.service.UserServiceImpl;
+import com.hazucoi.spring6.autowired.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
