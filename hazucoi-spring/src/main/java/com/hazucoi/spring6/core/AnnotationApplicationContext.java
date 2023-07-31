@@ -1,13 +1,16 @@
 package com.hazucoi.spring6.core;
 
 import com.hazucoi.spring6.core.annotation.Bean;
+import com.hazucoi.spring6.core.annotation.Di;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AnnotationApplicationContext implements ApplicationContext {
 
@@ -34,6 +37,8 @@ public class AnnotationApplicationContext implements ApplicationContext {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        //依赖注入
+        loadDi();
     }
 
     @Override
@@ -86,5 +91,24 @@ public class AnnotationApplicationContext implements ApplicationContext {
             }
         }
     }
-
+    private void loadDi() {
+        for(Map.Entry<Class,Object> entry : beanFactory.entrySet()){
+            //就是咱们放在容器的对象
+            Object obj = entry.getValue();
+            Class<?> aClass = obj.getClass();
+            Field[] declaredFields = aClass.getDeclaredFields();
+            for (Field field : declaredFields){
+                Di annotation = field.getAnnotation(Di.class);
+                if( annotation != null ){
+                    field.setAccessible(true);
+                    try {
+                        System.out.println("正在给【"+obj.getClass().getName()+"】属性【" + field.getName() + "】注入值【"+ beanFactory.get(field.getType()).getClass().getName() +"】");
+                        field.set(obj,beanFactory.get(field.getType()));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
 }
