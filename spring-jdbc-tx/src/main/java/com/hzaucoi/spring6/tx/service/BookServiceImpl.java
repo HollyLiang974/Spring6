@@ -3,8 +3,17 @@ package com.hzaucoi.spring6.tx.service;
 import com.hzaucoi.spring6.tx.dao.BookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+//因为service层表示业务逻辑层，一个方法表示一个完成的功能，因此处理事务一般在service层处理
+//
+//  在BookServiceImpl的buybook()添加注解@Transactional
+//观察结果 由于使用了Spring的声明式事务，更新库存和更新余额都没有执行
+//@Transactional标识在方法上，则只会影响该方法
+//
+//@Transactional标识的类上，则会影响类中所有的方法
 @Service
+@Transactional
 public class BookServiceImpl implements BookService {
     @Autowired
     private BookDao bookDao;
