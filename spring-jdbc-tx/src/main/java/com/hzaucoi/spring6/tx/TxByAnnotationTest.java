@@ -10,8 +10,16 @@ public class TxByAnnotationTest {
     @Autowired
     private BookController bookController;
 
+
     @Test
     public void testBuyBook() {
         bookController.buyBook(1, 1);
     }
+
+    @Test
+    public void testCheckout() {
+        bookController.checkout(new Integer[]{1, 2}, 1);
+    }
 }
+
+
